@@ -20,7 +20,12 @@ mail = Mail(app)
 
 @app.route('/')
 def landing():
-    threading.Thread(target=wake_up_portfolio_projects).start()
+    # Uses threading to wake up portfolio projects
+    thread = threading.Thread(target=wake_up_portfolio_projects)
+    # Allows thread to exit when main program exits
+    thread.daemon = True
+    thread.start()
+    # Renders template
     return redirect("/index.html", code=302)
 
 
