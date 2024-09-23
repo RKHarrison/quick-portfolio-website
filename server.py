@@ -1,4 +1,4 @@
-import os, secrets
+import os, secrets, requests, threading
 from flask import Flask, render_template, request, redirect, flash
 from flask_mail import Mail, Message
 
@@ -17,13 +17,17 @@ app.config['MAIL_RECIPIENTS'] = os.getenv('MAIL_RECIPIENTS').split(',')
 
 mail = Mail(app)
 
+
 @app.route('/')
 def landing():
+    threading.Thread(target=wake_up_portfolio_projects).start()
     return redirect("/index.html", code=302)
+
 
 @app.route("/<string:page_name>")
 def html_page(page_name):
     return render_template(page_name)
+
 
 # Route to handle the contact form submission
 @app.route('/contact', methods=['GET', 'POST'])
@@ -52,6 +56,16 @@ def contact():
         return redirect("/contact.html")
 
     return render_template("contact.html")
+
+
+# function to wake-up down-cycled projects ready for people to view without a wait
+def wake_up_portfolio_projects():
+    try:
+        requests.get('https://rkh-ncnews.netlify.app/', timeout=5)
+        requests.get('https://parkfinite-2-api.onrender.com/', timeout=5)
+    except requests.exceptions.RequestException:
+        pass
+
 
 if __name__ == "__main__":
     app.run(debug=True)
