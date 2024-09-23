@@ -13,6 +13,7 @@ app.config['MAIL_PORT'] = 587
 app.config['MAIL_USE_TLS'] = True
 app.config['MAIL_USERNAME'] = os.getenv('MAIL_USERNAME')
 app.config['MAIL_PASSWORD'] = os.getenv('MAIL_PASSWORD')
+app.config['MAIL_RECIPIENTS'] = os.getenv('MAIL_RECIPIENTS').split(',')
 
 mail = Mail(app)
 
@@ -38,8 +39,8 @@ def contact():
 
         # Send email using Flask-Mail
         msg = Message(subject=subject,
-                      sender=os.getenv('MAIL_USERNAME'),
-                      recipients=['r.harr.k@gmail.com'],
+                      sender=app.config['MAIL_USERNAME'],
+                      recipients=app.config['MAIL_RECIPIENTS'],
                       body=f"Message from {email}:\n\n{message}")
 
         try:
