@@ -1,12 +1,11 @@
-.env
-venv/
-
+# PyCharm
+.idea/
 # macOS system files
 .DS_Store
-
 # Python cache directories
 __pycache__/
 *.py[cod]
-
-# PyCharm
-.idea/
+#environment variables
+.env
+#local virtual environment
+venv/
