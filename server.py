@@ -3,6 +3,7 @@ from flask import Flask, render_template, request, redirect, flash
 from flask_mail import Mail, Message
 
 app = Flask(__name__)
+mail = Mail(app)
 
 # Secret key needed for flashing messages
 app.secret_key = secrets.token_hex(16)
@@ -14,8 +15,6 @@ app.config['MAIL_USE_TLS'] = True
 app.config['MAIL_USERNAME'] = os.getenv('MAIL_USERNAME')
 app.config['MAIL_PASSWORD'] = os.getenv('MAIL_PASSWORD')
 app.config['MAIL_RECIPIENTS'] = os.getenv('MAIL_RECIPIENTS').split(',')
-
-mail = Mail(app)
 
 
 @app.route('/')
