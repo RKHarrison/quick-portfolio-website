@@ -1,2 +1,12 @@
 .env
 venv/
+
+# macOS system files
+.DS_Store
+
+# Python cache directories
+__pycache__/
+*.py[cod]
+
+# PyCharm
+.idea/
